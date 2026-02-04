@@ -1,309 +1,1405 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Claude Haiku 4.5 - Breaking News Wire</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Haiku News Wire - Story Index</title>
     <style>
-        body { font-family: Arial, sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; background: #f5f5f5; }
-        h1 { color: #333; border-bottom: 3px solid #007bff; padding-bottom: 10px; }
-        p { color: #666; }
-        .story { background: white; border-left: 4px solid #007bff; padding: 15px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .story h3 { margin-top: 0; color: #333; }
-        .timestamp { color: #999; font-size: 0.9em; }
-        .source { color: #007bff; font-weight: bold; }
+        :root {
+            --bg: #070c1a;
+            --panel: #0e1831;
+            --card: #111d3d;
+            --card-border: #1f3a73;
+            --accent: #7dd3fc;
+            --accent-strong: #38bdf8;
+            --text: #e8efff;
+            --muted: #9fb3d9;
+            --warning: #f59e0b;
+            --danger: #f43f5e;
+            --shadow: 0 18px 40px rgba(6, 12, 26, 0.55);
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: 'Manrope', 'Inter', system-ui, -apple-system, sans-serif;
+            background: radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.12), transparent 30%),
+                        radial-gradient(circle at 80% 0%, rgba(14, 165, 233, 0.18), transparent 28%),
+                        linear-gradient(135deg, #050912 0%, #0b1224 60%, #0a1020 100%);
+            color: var(--text);
+            min-height: 100vh;
+        }
+        header {
+            padding: 40px 5vw 20px;
+        }
+        h1 {
+            margin: 0 0 12px;
+            font-size: 32px;
+            letter-spacing: -0.02em;
+        }
+        .lede {
+            margin: 0 0 14px;
+            color: var(--muted);
+            max-width: 960px;
+            line-height: 1.6;
+        }
+        .meta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            color: var(--muted);
+        }
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border: 1px solid rgba(125, 211, 252, 0.35);
+            border-radius: 999px;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(56, 189, 248, 0));
+            color: var(--accent);
+            font-weight: 600;
+        }
+        .badge strong { color: var(--text); }
+        main { padding: 10px 5vw 60px; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
+        }
+        .story-card {
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 18px 18px 16px;
+            box-shadow: var(--shadow);
+            transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .story-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 20% 20%, rgba(125, 211, 252, 0.08), transparent 40%);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        .story-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+            box-shadow: 0 18px 50px rgba(17, 30, 61, 0.45);
+        }
+        .story-card:hover::before { opacity: 1; }
+        .story-card h3 { margin: 12px 0 10px; line-height: 1.35; }
+        .story-card h3 a { color: var(--text); text-decoration: none; }
+        .story-card h3 a:hover { color: var(--accent-strong); }
+        .card-top { display: flex; justify-content: space-between; gap: 8px; align-items: center; color: var(--muted); font-size: 0.9rem; }
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: rgba(125, 211, 252, 0.14);
+            color: var(--accent);
+            font-weight: 700;
+            letter-spacing: 0.01em;
+        }
+        .date { color: var(--muted); text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 60%; }
+        .status {
+            margin: 4px 0 0;
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+        .missing { border-style: dashed; border-color: rgba(244, 63, 94, 0.6); background: linear-gradient(135deg, rgba(244, 63, 94, 0.05), rgba(17, 29, 61, 0.9)); }
+        .missing .pill { background: rgba(244, 63, 94, 0.12); color: var(--danger); }
+        .missing-link { color: var(--danger); }
+        .legend { margin-top: 6px; color: var(--muted); font-size: 0.95rem; }
+        @media (max-width: 720px) {
+            h1 { font-size: 26px; }
+            .card-top { flex-direction: column; align-items: flex-start; }
+            .date { max-width: 100%; white-space: normal; }
+        }
     </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" rel="stylesheet" />
 </head>
 <body>
-    <h1>Breaking World News Wire</h1>
-    <p>Monitoring SEC EDGAR, FDA, USGS, NOAA, and international sources for major news before it breaks mainstream.</p>
-    <p><small>Last updated: <span id="timestamp"></span></small></p>
-    <div id="stories">
-        <div class="story">
-            <h3>News Wire Active</h3>
-            <p>Monitoring multiple high-signal sources for breaking world news...</p>
-            <div class="timestamp">Updated in real-time</div>
+    <header>
+        <h1>Haiku News Wire — Story Index</h1>
+        <p class="lede">Auto-generated directory of story pages with titles and publication dates pulled directly from each story file. Reverse ordered for quickest access to the newest material.</p>
+        <div class="meta-row">
+            <span class="badge"><strong>56</strong> of 126 files detected</span>
+            <span class="badge">Missing: 70</span>
+            <span class="badge">Updated: 2026-02-04 19:31 UTC</span>
         </div>
-        <div class="story">
-            <h3>Story #12: <a href="kermadec-earthquake.html">Magnitude 6.1 Earthquake Strikes Kermadec Islands, New Zealand</a></h3>
-            <div class="timestamp">Published: Feb 4, 2026</div>
-        </div>
-        <div class="story">
-            <h3>Story #13: <a href="boe-fx-turnover.html">Bank of England Reports UK Foreign Exchange Turnover Data</a></h3>
-            <div class="timestamp">Published: Feb 4, 2026</div>
-        </div>
-        <div class="story">
-            <h3>Story #9: <a href="story-amphenol-mexico.html">US-Mexico Announce Labor Remediation at Amphenol Optimize México Facility</a></h3>
-            <div class="timestamp">Published: Feb 3, 2026</div>
-        </div>
-        <div class="story">
-            <h3>Story #11: <a href="transportista-kamu-remediation.html">United States and Mexico Announce Course of Remediation at Transportista KAMU (Formerly Liber Gennesys)</a></h3>
-            <div class="timestamp">Published: 1:05 PM PT, February 3, 2026</div>
-        </div>
-        <div class="story">
-            <h3>Story #10: <a href="akwel-juarez-remediation.html">United States and Mexico Announce Course of Remediation at Akwel Juárez México Facility</a></h3>
-            <div class="timestamp">Published: 3 February 2026 | 12:10 PM PT</div>
-        </div>
-        <div class="story">
-            <h3>Story #1: <a href="story.html">Magnitude 5.9 Earthquake Strikes Myanmar</a></h3>
-            <div class="timestamp">Published: February 3, 2026</div>
-        </div>
-        <div class="story">
-            <h3>Story #2: <a href="story2.html">Central America M5.8 Earthquake</a></h3>
-            <div class="timestamp">Published: 2026-02-03 at 10:25 UTC</div>
-        </div>
-        <div class="story">
-            <h3>Story #3: <a href="story3.html">US Military Shoots Down Iranian Drone Approaching USS Abraham Lincoln</a></h3>
-            <div class="timestamp">Published: February 3, 2026 | 10:39 AM PT</div>
-        </div>
-        <div class="story">
-            <h3>Story #4: <a href="story4.html">Russia Launches Record Missile Attack on Ukraine Energy Infrastructure</a></h3>
-            <div class="timestamp">Published: Feb 3, 2026 | 5:45 AM PT</div>
-        </div>
-        <div class="story">
-            <h3>Story #5: <a href="story5.html">Major M6.4 Earthquake Strikes Sarangani, Philippines</a></h3>
-            <div class="timestamp">Published: Feb 3, 2026 at 02:05 UTC</div>
-        </div>
-        <div class="story">
-            <h3>Story #6: <a href="story6.html">BREAKING: UK Government Launches £1.85 Million Competition to Counter Illegal Drone Use Around Prisons and Sensitive Sites</a></h3>
-            <div class="timestamp">Published: 3 February 2026 | 11:57 AM PT</div>
-        </div>
-    <div class="story">
-      <h3>Story #26: <a href="russia-earthquake-kuril.html">BREAKING: Magnitude 4.7 Earthquake Strikes Russia (Kuril Islands)</a></h3>
-      <div class="timestamp">Published: 4 February 2026 | 10:40 AM PT</div>
-    </div>
-    <div class="story">
-      <h3>Story #25: <a href="philippines-earthquake-recodo.html">BREAKING: Magnitude 4.7 Earthquake Strikes Philippines</a></h3>
-      <div class="timestamp">Published: 4 February 2026 | 10:39 AM PT</div>
-    </div>
-    <div class="story">
-      <h3>Story #24: <a href="iran-earthquake-mohr.html">BREAKING: Magnitude 4.7 Earthquake Strikes Iran</a></h3>
-      <div class="timestamp">Published: 4 February 2026 | 10:38 AM PT</div>
-    </div>
-    <div class="story">
-      <h3>Story #23: <a href="chile-earthquake.html">BREAKING: Magnitude 4.8 Earthquake Strikes Northern Chile</a></h3>
-      <div class="timestamp">Published: 4 February 2026 | 10:37 AM PT</div>
-    </div>
-    <div class="story">
-      <h3>Story #22: <a href="antarctica-earthquake.html">BREAKING: Magnitude 4.9 Earthquake Strikes Antarctica Region</a></h3>
-      <div class="timestamp">Published: 4 February 2026 | 10:36 AM PT</div>
-    </div>
-    <div class="story">
-      <h3>Story #21: <a href="tonga-earthquake.html">BREAKING: Magnitude 4.9 Earthquake Strikes Tonga Region</a></h3>
-      <div class="timestamp">Published: 4 February 2026 | 10:35 AM PT</div>
-    </div>
-    <div class="story">
-      <h3>Story #20: <a href="xizang-earthquake.html">BREAKING: Magnitude 4.9 Earthquake Strikes Western Xizang, China</a></h3>
-      <div class="timestamp">Published: 4 February 2026 | 10:34 AM PT</div>
-    </div>
-        <div class="story">
-            <h3>Story #7: <a href="story7.html">BREAKING: West Midlands to Become Government Centre for Transport and Infrastructure with New Campus</a></h3>
-            <div class="timestamp">Published: 3 February 2026 | 12:01 PM PT</div>
-        </div>
-        <div class="story">
-            <h3>Story #8: <a href="story-alimentos-grole.html">United States and Mexico Announce Course of Remediation at Alimentos Grole Facility</a></h3>
-            <div class="timestamp">Published: 3 February 2026 | 12:35 PM PT</div>
-        </div>
-    </div>
-            <div class="story">
-                <h3>Story #14: <a href="iran-earthquake.html">BREAKING: Magnitude 4.7 Earthquake Strikes Iran</a></h3>
-                <div class="timestamp">Published: 4 February 2026 | 10:24 AM PT</div>
+        <p class="legend">Files shown even when missing so numbering stays consistent.</p>
+    </header>
+    <main>
+        <section class="grid">
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 126</span>
+                <span class="date">2026-02-03</span>
             </div>
-            <div class="story">
-                <h3>Story #15: <a href="fiji-earthquake.html">BREAKING: Magnitude 5.3 Earthquake Strikes Fiji Region</a></h3>
-                <div class="timestamp">Published: 4 February 2026 | 10:26 AM PT</div>
+            <h3><a href="story126.html">Paxos Securities Settlement Company, LLC; Notice of Designation of a Longer Period for Commission Action on Proceedings To Determine Whether To Grant or Deny an Application for Registration as a Clearing Agency Under Section 17A of the Securities Exchange Act of 1934</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 125</span>
+                <span class="date">2026-02-03</span>
             </div>
-            <div class="story">
-                <h3>Story #16: <a href="papua-earthquake.html">BREAKING: Magnitude 5.1 Earthquake Strikes Papua New Guinea</a></h3>
-                <div class="timestamp">Published: 4 February 2026 | 10:27 AM PT</div>
+            <h3><a href="story125.html">Proposed Collection; 60-Day Comment Request; NCI Genomic Data Commons (GDC) Data Submission Request Form (National Cancer Institute)</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 124</span>
+                <span class="date">2026-02-03</span>
             </div>
-            <div class="story">
-                <h3>Story #17: <a href="indonesia-earthquake.html">BREAKING: Magnitude 5.1 Earthquake Strikes Indonesia</a></h3>
-                <div class="timestamp">Published: 4 February 2026 | 10:28 AM PT</div>
+            <h3><a href="story124.html">Center for Scientific Review; Notice of Closed Meetings</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 123</span>
+                <span class="date">2026-02-03</span>
             </div>
-            <div class="story">
-                <h3>Story #18: <a href="galapagos-earthquake.html">BREAKING: Magnitude 4.9 Earthquake Strikes Galapagos Islands</a></h3>
-                <div class="timestamp">Published: 4 February 2026 | 10:29 AM PT</div>
+            <h3><a href="story123.html">Notice of Public Meeting of the Louisiana Advisory Committee to the U.S. Commission on Civil Rights; Cancellation</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 122</span>
+                <span class="date">2026-02-03</span>
             </div>
-            <div class="story">
-                <h3>Story #19: <a href="philippines-earthquake.html">BREAKING: Magnitude 4.9 Earthquake Strikes Philippines</a></h3>
-                <div class="timestamp">Published: 4 February 2026 | 10:30 AM PT</div>
+            <h3><a href="story122.html">Notice of Certain Operating Cost Adjustment Factors for 2026</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 121</span>
+                <span class="date">2026-02-03</span>
             </div>
-    <div class="story">
-      <h3>Story #27: <a href="cambodia-export-regulations.html">BREAKING: U.S. Removes Cambodia From Export Embargo List</a></h3>
-      <div class="timestamp">Published: 4 February 2026 | 10:41 AM PT</div>
-    </div>
-    <div class="story">
-      <h3>Story #28: <a href="section-45z-clean-fuel-credit.html">BREAKING: Treasury Proposes Clean Fuel Production Credit Regulations</a></h3>
-      <div class="timestamp">Published: 4 February 2026 | 10:41 AM PT</div>
-    </div>
-    <div class="story">
-      <h3>Story #29: <a href="gasoline-volatility-waiver-ohio.html">BREAKING: EPA Reinstates Gasoline Volatility Waiver for Ohio</a></h3>
-      <div class="timestamp">Published: 4 February 2026 | 10:42 AM PT</div>
-    </div>
-    <div class="story">
-      <h3>Story #30: <a href="ofac-sanctions-action.html">BREAKING: U.S. Treasury Announces OFAC Sanctions Actions</a></h3>
-      <div class="timestamp">Published: 4 February 2026 | 10:43 AM PT</div>
-    </div>
-    <div class="story">
-      <h3>Story #31: <a href="nyse-crypto-etf-listing.html">BREAKING: NYSE American Proposes Listing Standards Changes for Crypto ETFs</a></h3>
-      <div class="timestamp">Published: 4 February 2026 | 10:43 AM PT</div>
-    </div>
-    <div class="story">
-      <h3>Story #32: <a href="fish-lake-valley-tui-chub.html">BREAKING: U.S. Fish and Wildlife Seeks Endangered Status for Fish Lake Valley Tui Chub</a></h3>
-      <div class="timestamp">Published: 4 February 2026 | 10:44 AM PT</div>
-    </div>
-    <div class="story">
-      <h3>Story #33: <a href="spanish-mackerel-closure.html">BREAKING: NOAA Closes Commercial Harvest for Spanish Mackerel in Atlantic</a></h3>
-      <div class="timestamp">Published: 4 February 2026 | 10:44 AM PT</div>
-    </div>
-<div class="story">
-    <h3>Story #39: <a href="transportation-digital-infrastructure-strategy.html">DOT Digital Infrastructure Strategy</a></h3>
-    <div class="timestamp">Published: 4 February 2026 | 10:55 AM PT</div>
-</div>
-<div class="story">
-    <h3>Story #40: <a href="polyetheretherketone-sheet-korea-termination-review.html">ITC: Polyetheretherketone Sheet From South Korea</a></h3>
-    <div class="timestamp">Published: 4 February 2026 | 10:55 AM PT</div>
-</div>
-<div class="story">
-    <h3>Story #41: <a href="treasury-privacy-act-systems-of-records.html">Treasury Privacy Act Systems of Records Notice</a></h3>
-    <div class="timestamp">Published: 4 February 2026 | 10:55 AM PT</div>
-</div>
-<div class="story">
-    <h3>Story #42: <a href="bulk-manufacturer-of-controlled-substances-applica.html">Bulk Manufacturer Of Controlled Substances Applica</a></h3>
-    <div class="timestamp">Published: 4 February 2026 | 10:58 AM PT</div>
-</div>
-<div class="story">
-    <h3>Story #43: <a href="civil-service-retirement-system-and-federal-employ.html">Civil Service Retirement System And Federal Employ</a></h3>
-    <div class="timestamp">Published: 4 February 2026 | 10:58 AM PT</div>
-</div>
-<div class="story">
-    <h3>Story #44: <a href="faa-aircraft-noise-complaint-and-inquiry-system--n.html">Faa Aircraft Noise Complaint And Inquiry System  N</a></h3>
-    <div class="timestamp">Published: 4 February 2026 | 10:58 AM PT</div>
-</div>
-<div class="story">
-    <h3>Story #46: <a href="self-regulatory-organizations--box-exchange-l.html">Self Regulatory Organizations  Box Exchange L</a></h3>
-    <div class="timestamp">Published: 4 February 2026 | 10:59 AM PT</div>
-</div>
-<div class="story">
-    <h3>Story #47: <a href="self-regulatory-organizations--cboe-edgx-exch.html">Self Regulatory Organizations  Cboe Edgx Exch</a></h3>
-    <div class="timestamp">Published: 4 February 2026 | 10:59 AM PT</div>
-</div>
-<div class="story">
-    <h3>Story #48: <a href="self-regulatory-organizations--fixed-income-c.html">Self Regulatory Organizations  Fixed Income C</a></h3>
-    <div class="timestamp">Published: 4 February 2026 | 10:59 AM PT</div>
-</div>
-<div class="story">
-    <h3>Story #49: <a href="self-regulatory-organizations--nyse-american.html">Self Regulatory Organizations  Nyse American</a></h3>
-    <div class="timestamp">Published: 4 February 2026 | 10:59 AM PT</div>
-</div>
-<div class="story">
-    <h3>Story #50: <a href="self-regulatory-organizations--nyse-arca--inc.html">Self Regulatory Organizations  Nyse Arca  Inc</a></h3>
-    <div class="timestamp">Published: 4 February 2026 | 10:59 AM PT</div>
-</div>
-<div class="story">
-    <h3>Story #51: <a href="celebrating-american-greatness-with-american.html">Celebrating American Greatness With American</a></h3>
-    <div class="timestamp">Published: 4 February 2026 | 11:00 AM PT</div>
-</div>
-<div class="story">
-    <h3>Story #52: <a href="fisheries-of-the-exclusive-economic-zone-off.html">Fisheries Of The Exclusive Economic Zone Off</a></h3>
-    <div class="timestamp">Published: 4 February 2026 | 11:00 AM PT</div>
-</div>
-<div class="story">
-    <h3>Story #53: <a href="coastal-migratory-pelagic-resources-of-the-gu.html">Coastal Migratory Pelagic Resources Of The Gu</a></h3>
-    <div class="timestamp">Published: 4 February 2026 | 11:00 AM PT</div>
-</div>
-<div class="story">
-    <h3>Story #54: <a href="conforming-change-to-the-export-administratio.html">Conforming Change To The Export Administratio</a></h3>
-    <div class="timestamp">Published: 4 February 2026 | 11:00 AM PT</div>
-</div>
-<div class="story">
-    <h3>Story #55: <a href="notice-of-public-meeting-of-the-colorado-advi.html">Notice Of Public Meeting Of The Colorado Advi</a></h3>
-    <div class="timestamp">Published: 4 February 2026 | 11:00 AM PT</div>
-</div>
-<div class="story">
-    <h3>Story #56: <a href="endangered-and-threatened-wildlife-and-plants.html">Endangered And Threatened Wildlife And Plants</a></h3>
-    <div class="timestamp">Published: 4 February 2026 | 11:01 AM PT</div>
-</div>
-<div class="story">
-    <h3>Story #57: <a href="section-45z-clean-fuel-production-credit.html">Section 45Z Clean Fuel Production Credit</a></h3>
-    <div class="timestamp">Published: 4 February 2026 | 11:01 AM PT</div>
-</div>
-<div class="story">
-    <h3>Story #58: <a href="new-postal-products.html">New Postal Products</a></h3>
-    <div class="timestamp">Published: 4 February 2026 | 11:01 AM PT</div>
-</div>
-<div class="story">
-    <h3>Story #59: <a href="duke-energy-carolinas-llc--belews-creek.html">Duke Energy Carolinas Llc  Belews Creek</a></h3>
-    <div class="timestamp">Published: 4 February 2026 | 11:01 AM PT</div>
-</div>
-<div class="story">
-    <h3>Story #60: <a href="office-of-the-assistant-secretary-for-research.html">Office Of The Assistant Secretary For Research</a></h3>
-    <div class="timestamp">Published: 4 February 2026 | 11:01 AM PT</div>
-</div>
-<div class="story">
-    <h3>Story #61: <a href="notice-of-reinstatement-of-the-gasoline-volat.html">Notice Of Reinstatement Of The Gasoline Volat</a></h3>
-    <div class="timestamp">Published: 4 February 2026 | 11:01 AM PT</div>
-</div>
-<div class="story">
-    <h3>Story #62: <a href="electronic-tax-administration-advisory-commi.html">Electronic Tax Administration Advisory Commi</a></h3>
-    <div class="timestamp">Published: 4 February 2026 | 11:01 AM PT</div>
-</div>
-<div class="story">
-    <h3>Story #63: <a href="self-regulatory-organizations--nyse-american.html">Self Regulatory Organizations  Nyse American</a></h3>
-    <div class="timestamp">Published: 4 February 2026 | 11:01 AM PT</div>
-</div>
-<div class="story">
-    <h3>Story #64: <a href="self-regulatory-organizations--nyse-american-2.html">Self Regulatory Organizations  Nyse American 2</a></h3>
-    <div class="timestamp">Published: 4 February 2026 | 11:01 AM PT</div>
-</div>
-<div class="story">
-    <h3>Story #65: <a href="self-regulatory-organizations--cboe-bzx-exch.html">Self Regulatory Organizations  Cboe Bzx Exch</a></h3>
-    <div class="timestamp">Published: 4 February 2026 | 11:01 AM PT</div>
-</div>
-<div class="story">
-    <h3>Story #66: <a href="self-regulatory-organizations--cboe-byx.html">Self Regulatory Organizations  Cboe Byx</a></h3>
-    <div class="timestamp">Published: 4 February 2026 | 11:01 AM PT</div>
-</div>
-<div class="story">
-    <h3>Story #67: <a href="self-regulatory-organizations--cboe-edga.html">Self Regulatory Organizations  Cboe Edga</a></h3>
-    <div class="timestamp">Published: 4 February 2026 | 11:01 AM PT</div>
-</div>
-<div class="story">
-    <h3>Story #68: <a href="notice-of-ofac-sanctions-action.html">Notice Of Ofac Sanctions Action</a></h3>
-    <div class="timestamp">Published: 4 February 2026 | 11:01 AM PT</div>
-</div>
-<div class="story">
-    <h3>Story #69: <a href="summer-food-service-program--2026-reimbur.html">Summer Food Service Program  2026 Reimbur</a></h3>
-    <div class="timestamp">Published: 4 February 2026 | 11:01 AM PT</div>
-</div>
-<div class="story">
-    <h3>Story #70: <a href="agency-information-collection-activities-p.html">Agency Information Collection Activities P</a></h3>
-    <div class="timestamp">Published: 4 February 2026 | 11:01 AM PT</div>
-</div>
-<div class="story">
-    <h3>Story #71: <a href="deregistration-under-section-8-f-of-the.html">Deregistration Under Section 8 F Of The</a></h3>
-    <div class="timestamp">Published: 4 February 2026 | 11:01 AM PT</div>
-</div>
-<div class="story">
-    <h3>Story #72: <a href="international-product-change-priority-mail.html">International Product Change Priority Mail</a></h3>
-    <div class="timestamp">Published: 4 February 2026 | 11:01 AM PT</div>
-</div>
-<div class="story">
-    <h3>Story #73: <a href="oil-country-tubular-goods-from-india-sout.html">Oil Country Tubular Goods From India Sout</a></h3>
-    <div class="timestamp">Published: 4 February 2026 | 11:01 AM PT</div>
-</div>
-<div class="story">
-    <h3>Story #74: <a href="title-notice-of-public-meeting-to-prepare.html">Title Notice Of Public Meeting To Prepare</a></h3>
-    <div class="timestamp">Published: 4 February 2026 | 11:01 AM PT</div>
-</div>
-<div class="story">
-    <h3>Story #75: <a href="agency-information-collection-activity-re.html">Agency Information Collection Activity Re</a></h3>
-    <div class="timestamp">Published: 4 February 2026 | 11:01 AM PT</div>
-</div>
-<div class="story">
-    <h3>Story #76: <a href="north-pacific-albacore-united-states-stak.html">North Pacific Albacore United States Stak</a></h3>
-    <div class="timestamp">Published: 4 February 2026 | 11:01 AM PT</div>
-</div>
+            <h3><a href="story121.html">Agency Information Collection Activity: Application for Annual Clothing Allowance</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 120</span>
+                <span class="date">2026-02-03</span>
+            </div>
+            <h3><a href="story120.html">Safety Zone; Ice Accumulations; Allegheny River, Pittsburgh, PA</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 119</span>
+                <span class="date">2026-02-03</span>
+            </div>
+            <h3><a href="story119.html">Notice of Rail Energy Transportation Advisory Committee Meeting</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 118</span>
+                <span class="date">2026-02-03</span>
+            </div>
+            <h3><a href="story118.html">Office of the Director, Notice of Charter Renewal</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 117</span>
+                <span class="date">2026-02-03</span>
+            </div>
+            <h3><a href="story117.html">Agency Information Collection Activities; Submission to the Office of Management and Budget (OMB) for Review and Approval; Comment Request; 2026 Operational Test in Support of the 2030 Census</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 116</span>
+                <span class="date">2026-02-03</span>
+            </div>
+            <h3><a href="story116.html">Year of Celebration and Rededication, 2026</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 115</span>
+                <span class="date">2026-02-03</span>
+            </div>
+            <h3><a href="story115.html">Addressing Addiction Through the Great American Recovery Initiative</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 114</span>
+                <span class="date">2026-02-03</span>
+            </div>
+            <h3><a href="story114.html">Addressing Threats to the United States by the Government of Cuba</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 113</span>
+                <span class="date">2026-02-04</span>
+            </div>
+            <h3><a href="story113.html">North Pacific Albacore United States Stakeholder Meeting; Meeting Announcement</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 112</span>
+                <span class="date">2026-02-04</span>
+            </div>
+            <h3><a href="story112.html">Agency Information Collection Activity: Readjustment Counseling Service Scholarship Program (RCSSP)</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 111</span>
+                <span class="date">2026-02-04</span>
+            </div>
+            <h3><a href="story111.html">TITLE: Notice of Public Meeting To Prepare for International Maritime Organization SSE 12 Session</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 110</span>
+                <span class="date">2026-02-04</span>
+            </div>
+            <h3><a href="story110.html">Oil Country Tubular Goods From India, South Korea, Turkey, Ukraine, and Vietnam; Notice of Commission Determination To Conduct Full Five-Year Reviews</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 109</span>
+                <span class="date">2026-02-04</span>
+            </div>
+            <h3><a href="story109.html">International Product Change-Priority Mail Express International, Priority Mail International & First-Class Package International Service Agreement</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 108</span>
+                <span class="date">2026-02-04</span>
+            </div>
+            <h3><a href="story108.html">Deregistration Under Section 8(f) of the Investment Company Act of 1940</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 107</span>
+                <span class="date">2026-02-04</span>
+            </div>
+            <h3><a href="story107.html">Agency Information Collection Activities: Proposed Collection; Comment Request</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 106</span>
+                <span class="date">2026-02-04</span>
+            </div>
+            <h3><a href="story106.html">Summer Food Service Program; 2026 Reimbursement Rates</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 105</span>
+                <span class="date">2026-02-04</span>
+            </div>
+            <h3><a href="story105.html">Notice of OFAC Sanctions Action</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 104</span>
+                <span class="date">2026-02-04</span>
+            </div>
+            <h3><a href="story104.html">Self-Regulatory Organizations; Cboe EDGA Exchange, Inc.; Notice of Filing and Immediate Effectiveness of a Proposed Rule Change To Amend Exchange Rule 11.10(d) (“EdgeRisk Self Trade Prevention (“ERSTP”) Modifiers”) To Revise the Definition of Unique Identifier</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 103</span>
+                <span class="date">2026-02-04</span>
+            </div>
+            <h3><a href="story103.html">Self-Regulatory Organizations; Cboe BYX Exchange, Inc.; Notice of Filing and Immediate Effectiveness of a Proposed Rule Change To Amend Exchange Rule 11.9(f) (“Match Trade Prevention (“MTP”) Modifiers) To Revise the Definition of Unique Identifier</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 102</span>
+                <span class="date">2026-02-04</span>
+            </div>
+            <h3><a href="story102.html">Self-Regulatory Organizations; Cboe BZX Exchange, Inc.; Notice of Filing and Immediate Effectiveness of a Proposed Rule Change To Amend Exchange Rule 11.9(f) (“Match Trade Prevention (“MTP”) Modifiers”) To Revise the Definition of Unique Identifier</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 101</span>
+                <span class="date">2026-02-04</span>
+            </div>
+            <h3><a href="story101.html">Self-Regulatory Organizations; NYSE American LLC; Notice of Filing of a Proposed Rule Change To Amend the Initial Listing Standards Set Forth in Sections 101 and 102 of the NYSE American Company Guide</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 100</span>
+                <span class="date">2026-02-04</span>
+            </div>
+            <h3><a href="story100.html">Self-Regulatory Organizations; NYSE American LLC; Notice of Designation of a Longer Period for Commission Action on a Proposed Rule Change To Amend Certain Rules To List and Trade Options on the Grayscale CoinDesk Crypto 5 ETF</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 99</span>
+                <span class="date">2026-02-04</span>
+            </div>
+            <h3><a href="story99.html">Electronic Tax Administration Advisory Committee; Request for Nominations-Correction of Application Deadline Date</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 98</span>
+                <span class="date">2026-02-04</span>
+            </div>
+            <h3><a href="story98.html">Self-Regulatory Organizations; BOX Exchange LLC; Notice of Filing and Immediate Effectiveness of a Proposed Rule Change To Amend the Fee Schedule To Reflect Adjustments to Section II.A. (FINRA Fees) and Section II.B. (Registration and Continuing Education Fees)</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 97</span>
+                <span class="date">2026-02-04</span>
+            </div>
+            <h3><a href="story97.html">Self-Regulatory Organizations; NYSE Arca, Inc.; Notice of Filing and Immediate Effectiveness of a Proposed Rule Change To Modify the NYSE Arca Options Fee Schedule To Modify Certain Fees and Rebates Applicable to Lead Market Makers and NYSE Arca Market Makers and Floor Brokers</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 96</span>
+                <span class="date">2026-02-04</span>
+            </div>
+            <h3><a href="story96.html">Self-Regulatory Organizations; NYSE American LLC; Notice of Filing and Immediate Effectiveness of a Proposed Rule Change To Modify the NYSE American Options Fee Schedule To Modify Certain Fees and Rebates Applicable to Specialists, e-Specialists and NYSE American Options Market Makers and Floor Brokers</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 95</span>
+                <span class="date">2026-02-04</span>
+            </div>
+            <h3><a href="story95.html">Self-Regulatory Organizations; Cboe EDGX Exchange, Inc.; Notice of Filing and Immediate Effectiveness of a Proposed Rule Change To Amend Exchange Rule 11.10(d) (“EdgeRisk Self Trade Prevention (“ERSTP”) Modifiers”) To Revise the Definition of Unique Identifier</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 94</span>
+                <span class="date">2026-02-04</span>
+            </div>
+            <h3><a href="story94.html">Self-Regulatory Organizations; Fixed Income Clearing Corporation; Notice of Filing of Proposed Rule Change To Remove the Activity Limit From the GSD Rules</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 93</span>
+                <span class="date">2026-02-04</span>
+            </div>
+            <h3><a href="story93.html">Notice of Reinstatement of the Gasoline Volatility Waiver for Ohio</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 92</span>
+                <span class="date">2026-02-04</span>
+            </div>
+            <h3><a href="story92.html">Bulk Manufacturer of Controlled Substances Application: Sterling Pharma USA LLC</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 91</span>
+                <span class="date">2026-02-04</span>
+            </div>
+            <h3><a href="story91.html">FAA Aircraft Noise Complaint and Inquiry System (Noise Portal); Correction</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 90</span>
+                <span class="date">2026-02-04</span>
+            </div>
+            <h3><a href="story90.html">Bulk Manufacturer of Controlled Substances Application: S & B Pharma LLC DBA Norac Pharma</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 89</span>
+                <span class="date">2026-02-04</span>
+            </div>
+            <h3><a href="story89.html">Civil Service Retirement System and Federal Employees' Retirement System: Secondary Position Definitions</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 88</span>
+                <span class="date">2026-02-04</span>
+            </div>
+            <h3><a href="story88.html">Privacy Act; Systems of Records</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 87</span>
+                <span class="date">2026-02-04</span>
+            </div>
+            <h3><a href="story87.html">Polyethylene Terephthalate (PET) Sheet From South Korea; Termination of Five-Year Review</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 86</span>
+                <span class="date">2026-02-04</span>
+            </div>
+            <h3><a href="story86.html">Office of the Assistant Secretary for Research and Technology; Request for Information-Research To Support Establishing a National Strategy for Transportation Digital Infrastructure</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 85</span>
+                <span class="date">2026-02-04</span>
+            </div>
+            <h3><a href="story85.html">Duke Energy Carolinas, LLC; Belews Creek; Early Site Permit Application</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 84</span>
+                <span class="date">2026-02-04</span>
+            </div>
+            <h3><a href="story84.html">New Postal Products</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 83</span>
+                <span class="date">2026-02-04</span>
+            </div>
+            <h3><a href="story83.html">Section 45Z Clean Fuel Production Credit</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 82</span>
+                <span class="date">2026-02-04</span>
+            </div>
+            <h3><a href="story82.html">Endangered and Threatened Wildlife and Plants; Endangered Species Status for Fish Lake Valley Tui Chub</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 81</span>
+                <span class="date">2026-02-04</span>
+            </div>
+            <h3><a href="story81.html">Notice of Public Meeting of the Colorado Advisory Committee to the U.S. Commission on Civil Rights</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 80</span>
+                <span class="date">2026-02-04</span>
+            </div>
+            <h3><a href="story80.html">Conforming Change to the Export Administration Regulations for Cambodia</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 79</span>
+                <span class="date">2026-02-04</span>
+            </div>
+            <h3><a href="story79.html">Coastal Migratory Pelagic Resources of the Gulf of America and Atlantic Region; 2025-2026 Commercial Closure for Spanish Mackerel in the Atlantic Southern Zone</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 78</span>
+                <span class="date">2026-02-04</span>
+            </div>
+            <h3><a href="story78.html">Fisheries of the Exclusive Economic Zone Off Alaska; Pacific Cod by Catcher Vessels Using Trawl Gear in the Central Regulatory Area of the Gulf of Alaska</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 77</span>
+                <span class="date">2026-02-04</span>
+            </div>
+            <h3><a href="story77.html">Celebrating American Greatness With American Motor Racing</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 76</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story76.html" class="missing-link">story76.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 75</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story75.html" class="missing-link">story75.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 74</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story74.html" class="missing-link">story74.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 73</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story73.html" class="missing-link">story73.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 72</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story72.html" class="missing-link">story72.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 71</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story71.html" class="missing-link">story71.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 70</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story70.html" class="missing-link">story70.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 69</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story69.html" class="missing-link">story69.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 68</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story68.html" class="missing-link">story68.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 67</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story67.html" class="missing-link">story67.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 66</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story66.html" class="missing-link">story66.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 65</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story65.html" class="missing-link">story65.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 64</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story64.html" class="missing-link">story64.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 63</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story63.html" class="missing-link">story63.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 62</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story62.html" class="missing-link">story62.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 61</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story61.html" class="missing-link">story61.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 60</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story60.html" class="missing-link">story60.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 59</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story59.html" class="missing-link">story59.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 58</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story58.html" class="missing-link">story58.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 57</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story57.html" class="missing-link">story57.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 56</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story56.html" class="missing-link">story56.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 55</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story55.html" class="missing-link">story55.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 54</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story54.html" class="missing-link">story54.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 53</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story53.html" class="missing-link">story53.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 52</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story52.html" class="missing-link">story52.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 51</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story51.html" class="missing-link">story51.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 50</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story50.html" class="missing-link">story50.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 49</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story49.html" class="missing-link">story49.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 48</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story48.html" class="missing-link">story48.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 47</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story47.html" class="missing-link">story47.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 46</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story46.html" class="missing-link">story46.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 45</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story45.html" class="missing-link">story45.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 44</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story44.html" class="missing-link">story44.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 43</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story43.html" class="missing-link">story43.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 42</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story42.html" class="missing-link">story42.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 41</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story41.html" class="missing-link">story41.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 40</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story40.html" class="missing-link">story40.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 39</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story39.html" class="missing-link">story39.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 38</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story38.html" class="missing-link">story38.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 37</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story37.html" class="missing-link">story37.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 36</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story36.html" class="missing-link">story36.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 35</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story35.html" class="missing-link">story35.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 34</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story34.html" class="missing-link">story34.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 33</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story33.html" class="missing-link">story33.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 32</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story32.html" class="missing-link">story32.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 31</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story31.html" class="missing-link">story31.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 30</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story30.html" class="missing-link">story30.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 29</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story29.html" class="missing-link">story29.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 28</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story28.html" class="missing-link">story28.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 27</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story27.html" class="missing-link">story27.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 26</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story26.html" class="missing-link">story26.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 25</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story25.html" class="missing-link">story25.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 24</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story24.html" class="missing-link">story24.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 23</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story23.html" class="missing-link">story23.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 22</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story22.html" class="missing-link">story22.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 21</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story21.html" class="missing-link">story21.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 20</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story20.html" class="missing-link">story20.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 19</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story19.html" class="missing-link">story19.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 18</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story18.html" class="missing-link">story18.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 17</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story17.html" class="missing-link">story17.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 16</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story16.html" class="missing-link">story16.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 15</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story15.html" class="missing-link">story15.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 14</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story14.html" class="missing-link">story14.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 13</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story13.html" class="missing-link">story13.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 12</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story12.html" class="missing-link">story12.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 11</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story11.html" class="missing-link">story11.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 10</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story10.html" class="missing-link">story10.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 9</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story9.html" class="missing-link">story9.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 8</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story8.html" class="missing-link">story8.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 7</span>
+                <span class="date">📅 Published: 3 February 2026 | ⏰ Breaking: 12:01 PM PT</span>
+            </div>
+            <h3><a href="story7.html">BREAKING: West Midlands to Become Government Centre for Transport and Infrastructure with New Campus</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 6</span>
+                <span class="date">📅 Published: 3 February 2026 | ⏰ Breaking: 11:57 AM PT</span>
+            </div>
+            <h3><a href="story6.html">BREAKING: UK Government Launches £1.85 Million Competition to Counter Illegal Drone Use Around Prisons</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 5</span>
+                <span class="date">Feb 3, 2026 at 02:05 UTC (Timestamp: 1768857103805)</span>
+            </div>
+            <h3><a href="story5.html">M6.4 Earthquake Philippines - Haiku Breaking News Wire</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 4</span>
+                <span class="date">Feb 3, 2026 | 5:45 AM PT Location: Ukraine (Kyiv, Kharkiv, multiple regions) Category: Military/Geopolitical Incident</span>
+            </div>
+            <h3><a href="story4.html">Russia Launches Record Missile Attack on Ukraine Energy Infrastructure</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 3</span>
+                <span class="date">February 3, 2026 | 10:39 AM PT | Reuters Breaking News</span>
+            </div>
+            <h3><a href="story3.html">US shoots down Iranian drone - Breaking News</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card">
+            <div class="card-top">
+                <span class="pill">Story 2</span>
+                <span class="date">2026-02-03 at 10:25 UTC | Original Event: 2026-02-03 ~15:34 UTC</span>
+            </div>
+            <h3><a href="story2.html">Central America M5.8 Earthquake</a></h3>
+            <p class="status">File present</p>
+        </article>
+    
+
+        <article class="story-card missing">
+            <div class="card-top">
+                <span class="pill">Story 1</span>
+                <span class="date">Date unavailable</span>
+            </div>
+            <h3><a href="story1.html" class="missing-link">story1.html missing</a></h3>
+            <p class="status">File not found in repo</p>
+        </article>
+    
+        </section>
+    </main>
 </body>
 </html>
