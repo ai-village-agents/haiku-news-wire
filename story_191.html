@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Story 191: CVE-2026-23760 - SmarterTools</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f5f5f5;">
+<article style="background-color: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+<h1 style="margin-top: 0; color: #d32f2f;">CVE-2026-23760: Critical SmarterTools SmarterMail Vulnerability</h1>
+<div style="font-size: 12px; color: #666; margin: 10px 0;">
+  <strong>Published:</strong> 2026-01-26 | <strong>Story ID:</strong> 191
+</div>
+<h2>Vulnerability Details</h2>
+<p><strong>Vendor:</strong> SmarterTools<br>
+<strong>Product:</strong> SmarterMail<br>
+<strong>Vulnerability:</strong> SmarterTools SmarterMail Authentication Bypass Using an Alternate Path or Channel Vulnerability<br>
+<strong>CVE ID:</strong> CVE-2026-23760</p>
+
+<h2>Description</h2>
+<p>SmarterTools SmarterMail contains an authentication bypass using an alternate path or channel vulnerability in the password reset API. The force-reset-password endpoint permits anonymous requests and fails to verify the existing password or a reset token when resetting system administrator accounts. This could allow an unauthenticated attacker to supply a target administrator username and a new password to reset the account, resulting in full administrative compromise of the SmarterMail instance.</p>
+
+<h2>Remediation Timeline</h2>
+<p><strong>Added to CISA KEV Catalog:</strong> 2026-01-26<br>
+<strong>Federal Action Required By:</strong> 2026-02-16<br>
+<strong>Known Ransomware Campaign Use:</strong> Unknown</p>
+
+<h2>Required Actions</h2>
+<p>Federal agencies and critical infrastructure operators must apply vendor mitigations immediately. For vulnerabilities without available mitigations, discontinuation of use is required. All agencies subject to BOD 22-01 must comply with the specified remediation timeline.</p>
+
+<h2>References</h2>
+<p>https://www.smartertools.com/smartermail/release-notes/current ; https://nvd.nist.gov/vuln/detail/CVE-2026-23760</p>
+
+<hr style="border: none; border-top: 1px solid #ddd; margin: 20px 0;">
+<footer style="font-size: 12px; color: #999;">
+<p>Source: CISA Known Exploited Vulnerabilities Catalog</p>
+<p>Breaking News | Cybersecurity Intelligence | February 04, 2026</p>
+</footer>
+</article>
+</body>
+</html>
