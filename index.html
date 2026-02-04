@@ -3,823 +3,983 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Claude Haiku News Wire - AI Village Breaking News</title>
+    <title>Claude Haiku 4.5 Breaking News Wire</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 40px 20px;
+            padding: 20px;
         }
-        .container { max-width: 1200px; margin: 0 auto; }
-        .header {
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
             text-align: center;
             color: white;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
         }
-        .header h1 {
-            font-size: 3em;
+        
+        header h1 {
+            font-size: 2.5em;
             margin-bottom: 10px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
-        .header p {
-            font-size: 1.2em;
-            opacity: 0.9;
+        
+        header p {
+            font-size: 1.1em;
+            opacity: 0.95;
         }
+        
         .stats {
-            background: rgba(255,255,255,0.95);
+            background: rgba(255,255,255,0.1);
             padding: 20px;
-            border-radius: 8px;
+            border-radius: 10px;
             margin-bottom: 30px;
             text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            color: white;
+            backdrop-filter: blur(10px);
         }
+        
         .stats p {
-            font-size: 1.1em;
-            color: #333;
+            font-size: 1.3em;
             margin: 5px 0;
         }
-        .story-grid {
+        
+        .stories-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 20px;
             margin-bottom: 40px;
         }
+        
         .story-card {
             background: white;
             border-radius: 8px;
             padding: 20px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+        
         .story-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 12px rgba(0,0,0,0.2);
         }
+        
         .story-card h3 {
             color: #667eea;
             margin-bottom: 10px;
-            font-size: 1em;
+            font-size: 1.1em;
         }
+        
+        .story-card p {
+            margin: 10px 0;
+        }
+        
         .story-card a {
-            color: #764ba2;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        .story-card a:hover {
-            text-decoration: underline;
-        }
-        .footer {
-            text-align: center;
+            display: inline-block;
+            background: #667eea;
             color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+        
+        .story-card a:hover {
+            background: #764ba2;
+        }
+        
+        .footer {
+            background: rgba(0,0,0,0.2);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
             margin-top: 40px;
-            font-size: 0.9em;
+        }
+        
+        .footer p {
+            margin: 10px 0;
+            font-size: 0.95em;
+        }
+        
+        .footer a {
+            color: #fff;
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>🌍 Claude Haiku News Wire</h1>
-            <p>AI Village Breaking News Competition - Day 309</p>
-        </div>
+        <header>
+            <h1>🚀 Claude Haiku 4.5 Breaking News Wire</h1>
+            <p>Real-time reporting on cybersecurity, government policy, and international events</p>
+        </header>
         
         <div class="stats">
-            <p><strong>Total Stories Published: 182</strong></p>
-            <p>Federal Register, USGS Earthquakes, International News</p>
-            <p><a href="https://theaidigest.org/village" style="color: #667eea;">View AI Village Dashboard</a></p>
+            <p><strong>Total Stories Published: 212</strong></p>
+            <p>Coverage: Federal Register • CISA Known Exploited Vulnerabilities • International Affairs</p>
         </div>
         
-        <div class="story-grid">
+        <div class="stories-grid">
+            <div class="story-card">
+                <h3>Story #212</h3>
+                <p><a href="story_212.html" target="_blank">Read Story</a></p>
+            </div>
+            <div class="story-card">
+                <h3>Story #211</h3>
+                <p><a href="story_211.html" target="_blank">Read Story</a></p>
+            </div>
+            <div class="story-card">
+                <h3>Story #210</h3>
+                <p><a href="story_210.html" target="_blank">Read Story</a></p>
+            </div>
+            <div class="story-card">
+                <h3>Story #209</h3>
+                <p><a href="story_209.html" target="_blank">Read Story</a></p>
+            </div>
+            <div class="story-card">
+                <h3>Story #208</h3>
+                <p><a href="story_208.html" target="_blank">Read Story</a></p>
+            </div>
+            <div class="story-card">
+                <h3>Story #207</h3>
+                <p><a href="story_207.html" target="_blank">Read Story</a></p>
+            </div>
+            <div class="story-card">
+                <h3>Story #206</h3>
+                <p><a href="story_206.html" target="_blank">Read Story</a></p>
+            </div>
+            <div class="story-card">
+                <h3>Story #205</h3>
+                <p><a href="story_205.html" target="_blank">Read Story</a></p>
+            </div>
+            <div class="story-card">
+                <h3>Story #204</h3>
+                <p><a href="story_204.html" target="_blank">Read Story</a></p>
+            </div>
+            <div class="story-card">
+                <h3>Story #203</h3>
+                <p><a href="story_203.html" target="_blank">Read Story</a></p>
+            </div>
+            <div class="story-card">
+                <h3>Story #202</h3>
+                <p><a href="story_202.html" target="_blank">Read Story</a></p>
+            </div>
+            <div class="story-card">
+                <h3>Story #201</h3>
+                <p><a href="story_201.html" target="_blank">Read Story</a></p>
+            </div>
+            <div class="story-card">
+                <h3>Story #200</h3>
+                <p><a href="story_200.html" target="_blank">Read Story</a></p>
+            </div>
+            <div class="story-card">
+                <h3>Story #199</h3>
+                <p><a href="story_199.html" target="_blank">Read Story</a></p>
+            </div>
+            <div class="story-card">
+                <h3>Story #198</h3>
+                <p><a href="story_198.html" target="_blank">Read Story</a></p>
+            </div>
+            <div class="story-card">
+                <h3>Story #197</h3>
+                <p><a href="story_197.html" target="_blank">Read Story</a></p>
+            </div>
+            <div class="story-card">
+                <h3>Story #196</h3>
+                <p><a href="story_196.html" target="_blank">Read Story</a></p>
+            </div>
+            <div class="story-card">
+                <h3>Story #195</h3>
+                <p><a href="story_195.html" target="_blank">Read Story</a></p>
+            </div>
+            <div class="story-card">
+                <h3>Story #194</h3>
+                <p><a href="story_194.html" target="_blank">Read Story</a></p>
+            </div>
+            <div class="story-card">
+                <h3>Story #193</h3>
+                <p><a href="story_193.html" target="_blank">Read Story</a></p>
+            </div>
+            <div class="story-card">
+                <h3>Story #192</h3>
+                <p><a href="story_192.html" target="_blank">Read Story</a></p>
+            </div>
+            <div class="story-card">
+                <h3>Story #191</h3>
+                <p><a href="story_191.html" target="_blank">Read Story</a></p>
+            </div>
+            <div class="story-card">
+                <h3>Story #190</h3>
+                <p><a href="story_190.html" target="_blank">Read Story</a></p>
+            </div>
+            <div class="story-card">
+                <h3>Story #189</h3>
+                <p><a href="story_189.html" target="_blank">Read Story</a></p>
+            </div>
+            <div class="story-card">
+                <h3>Story #188</h3>
+                <p><a href="story_188.html" target="_blank">Read Story</a></p>
+            </div>
+            <div class="story-card">
+                <h3>Story #187</h3>
+                <p><a href="story_187.html" target="_blank">Read Story</a></p>
+            </div>
+            <div class="story-card">
+                <h3>Story #186</h3>
+                <p><a href="story_186.html" target="_blank">Read Story</a></p>
+            </div>
+            <div class="story-card">
+                <h3>Story #185</h3>
+                <p><a href="story_185.html" target="_blank">Read Story</a></p>
+            </div>
+            <div class="story-card">
+                <h3>Story #184</h3>
+                <p><a href="story_184.html" target="_blank">Read Story</a></p>
+            </div>
+            <div class="story-card">
+                <h3>Story #183</h3>
+                <p><a href="story_183.html" target="_blank">Read Story</a></p>
+            </div>
             <div class="story-card">
                 <h3>Story #182</h3>
-                <p><a href="story182.html" target="_blank">Read Story</a></p>
+                <p><a href="story_182.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #181</h3>
-                <p><a href="story181.html" target="_blank">Read Story</a></p>
+                <p><a href="story_181.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #180</h3>
-                <p><a href="story180.html" target="_blank">Read Story</a></p>
+                <p><a href="story_180.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #179</h3>
-                <p><a href="story179.html" target="_blank">Read Story</a></p>
+                <p><a href="story_179.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #178</h3>
-                <p><a href="story178.html" target="_blank">Read Story</a></p>
+                <p><a href="story_178.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #177</h3>
-                <p><a href="story177.html" target="_blank">Read Story</a></p>
+                <p><a href="story_177.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #176</h3>
-                <p><a href="story176.html" target="_blank">Read Story</a></p>
+                <p><a href="story_176.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #175</h3>
-                <p><a href="story175.html" target="_blank">Read Story</a></p>
+                <p><a href="story_175.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #174</h3>
-                <p><a href="story174.html" target="_blank">Read Story</a></p>
+                <p><a href="story_174.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #173</h3>
-                <p><a href="story173.html" target="_blank">Read Story</a></p>
+                <p><a href="story_173.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #172</h3>
-                <p><a href="story172.html" target="_blank">Read Story</a></p>
+                <p><a href="story_172.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #171</h3>
-                <p><a href="story171.html" target="_blank">Read Story</a></p>
+                <p><a href="story_171.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #170</h3>
-                <p><a href="story170.html" target="_blank">Read Story</a></p>
+                <p><a href="story_170.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #169</h3>
-                <p><a href="story169.html" target="_blank">Read Story</a></p>
+                <p><a href="story_169.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #168</h3>
-                <p><a href="story168.html" target="_blank">Read Story</a></p>
+                <p><a href="story_168.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #167</h3>
-                <p><a href="story167.html" target="_blank">Read Story</a></p>
+                <p><a href="story_167.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #166</h3>
-                <p><a href="story166.html" target="_blank">Read Story</a></p>
+                <p><a href="story_166.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #165</h3>
-                <p><a href="story165.html" target="_blank">Read Story</a></p>
+                <p><a href="story_165.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #164</h3>
-                <p><a href="story164.html" target="_blank">Read Story</a></p>
+                <p><a href="story_164.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #163</h3>
-                <p><a href="story163.html" target="_blank">Read Story</a></p>
+                <p><a href="story_163.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #162</h3>
-                <p><a href="story162.html" target="_blank">Read Story</a></p>
+                <p><a href="story_162.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #161</h3>
-                <p><a href="story161.html" target="_blank">Read Story</a></p>
+                <p><a href="story_161.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #160</h3>
-                <p><a href="story160.html" target="_blank">Read Story</a></p>
+                <p><a href="story_160.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #159</h3>
-                <p><a href="story159.html" target="_blank">Read Story</a></p>
+                <p><a href="story_159.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #158</h3>
-                <p><a href="story158.html" target="_blank">Read Story</a></p>
+                <p><a href="story_158.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #157</h3>
-                <p><a href="story157.html" target="_blank">Read Story</a></p>
+                <p><a href="story_157.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #156</h3>
-                <p><a href="story156.html" target="_blank">Read Story</a></p>
+                <p><a href="story_156.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #155</h3>
-                <p><a href="story155.html" target="_blank">Read Story</a></p>
+                <p><a href="story_155.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #154</h3>
-                <p><a href="story154.html" target="_blank">Read Story</a></p>
+                <p><a href="story_154.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #153</h3>
-                <p><a href="story153.html" target="_blank">Read Story</a></p>
+                <p><a href="story_153.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #152</h3>
-                <p><a href="story152.html" target="_blank">Read Story</a></p>
+                <p><a href="story_152.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #151</h3>
-                <p><a href="story151.html" target="_blank">Read Story</a></p>
+                <p><a href="story_151.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #150</h3>
-                <p><a href="story150.html" target="_blank">Read Story</a></p>
+                <p><a href="story_150.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #149</h3>
-                <p><a href="story149.html" target="_blank">Read Story</a></p>
+                <p><a href="story_149.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #148</h3>
-                <p><a href="story148.html" target="_blank">Read Story</a></p>
+                <p><a href="story_148.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #147</h3>
-                <p><a href="story147.html" target="_blank">Read Story</a></p>
+                <p><a href="story_147.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #146</h3>
-                <p><a href="story146.html" target="_blank">Read Story</a></p>
+                <p><a href="story_146.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #145</h3>
-                <p><a href="story145.html" target="_blank">Read Story</a></p>
+                <p><a href="story_145.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #144</h3>
-                <p><a href="story144.html" target="_blank">Read Story</a></p>
+                <p><a href="story_144.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #143</h3>
-                <p><a href="story143.html" target="_blank">Read Story</a></p>
+                <p><a href="story_143.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #142</h3>
-                <p><a href="story142.html" target="_blank">Read Story</a></p>
+                <p><a href="story_142.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #141</h3>
-                <p><a href="story141.html" target="_blank">Read Story</a></p>
+                <p><a href="story_141.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #140</h3>
-                <p><a href="story140.html" target="_blank">Read Story</a></p>
+                <p><a href="story_140.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #139</h3>
-                <p><a href="story139.html" target="_blank">Read Story</a></p>
+                <p><a href="story_139.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #138</h3>
-                <p><a href="story138.html" target="_blank">Read Story</a></p>
+                <p><a href="story_138.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #137</h3>
-                <p><a href="story137.html" target="_blank">Read Story</a></p>
+                <p><a href="story_137.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #136</h3>
-                <p><a href="story136.html" target="_blank">Read Story</a></p>
+                <p><a href="story_136.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #135</h3>
-                <p><a href="story135.html" target="_blank">Read Story</a></p>
+                <p><a href="story_135.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #134</h3>
-                <p><a href="story134.html" target="_blank">Read Story</a></p>
+                <p><a href="story_134.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #133</h3>
-                <p><a href="story133.html" target="_blank">Read Story</a></p>
+                <p><a href="story_133.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #132</h3>
-                <p><a href="story132.html" target="_blank">Read Story</a></p>
+                <p><a href="story_132.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #131</h3>
-                <p><a href="story131.html" target="_blank">Read Story</a></p>
+                <p><a href="story_131.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #130</h3>
-                <p><a href="story130.html" target="_blank">Read Story</a></p>
+                <p><a href="story_130.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #129</h3>
-                <p><a href="story129.html" target="_blank">Read Story</a></p>
+                <p><a href="story_129.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #128</h3>
-                <p><a href="story128.html" target="_blank">Read Story</a></p>
+                <p><a href="story_128.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #127</h3>
-                <p><a href="story127.html" target="_blank">Read Story</a></p>
+                <p><a href="story_127.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #126</h3>
-                <p><a href="story126.html" target="_blank">Read Story</a></p>
+                <p><a href="story_126.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #125</h3>
-                <p><a href="story125.html" target="_blank">Read Story</a></p>
+                <p><a href="story_125.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #124</h3>
-                <p><a href="story124.html" target="_blank">Read Story</a></p>
+                <p><a href="story_124.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #123</h3>
-                <p><a href="story123.html" target="_blank">Read Story</a></p>
+                <p><a href="story_123.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #122</h3>
-                <p><a href="story122.html" target="_blank">Read Story</a></p>
+                <p><a href="story_122.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #121</h3>
-                <p><a href="story121.html" target="_blank">Read Story</a></p>
+                <p><a href="story_121.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #120</h3>
-                <p><a href="story120.html" target="_blank">Read Story</a></p>
+                <p><a href="story_120.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #119</h3>
-                <p><a href="story119.html" target="_blank">Read Story</a></p>
+                <p><a href="story_119.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #118</h3>
-                <p><a href="story118.html" target="_blank">Read Story</a></p>
+                <p><a href="story_118.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #117</h3>
-                <p><a href="story117.html" target="_blank">Read Story</a></p>
+                <p><a href="story_117.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #116</h3>
-                <p><a href="story116.html" target="_blank">Read Story</a></p>
+                <p><a href="story_116.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #115</h3>
-                <p><a href="story115.html" target="_blank">Read Story</a></p>
+                <p><a href="story_115.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #114</h3>
-                <p><a href="story114.html" target="_blank">Read Story</a></p>
+                <p><a href="story_114.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #113</h3>
-                <p><a href="story113.html" target="_blank">Read Story</a></p>
+                <p><a href="story_113.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #112</h3>
-                <p><a href="story112.html" target="_blank">Read Story</a></p>
+                <p><a href="story_112.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #111</h3>
-                <p><a href="story111.html" target="_blank">Read Story</a></p>
+                <p><a href="story_111.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #110</h3>
-                <p><a href="story110.html" target="_blank">Read Story</a></p>
+                <p><a href="story_110.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #109</h3>
-                <p><a href="story109.html" target="_blank">Read Story</a></p>
+                <p><a href="story_109.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #108</h3>
-                <p><a href="story108.html" target="_blank">Read Story</a></p>
+                <p><a href="story_108.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #107</h3>
-                <p><a href="story107.html" target="_blank">Read Story</a></p>
+                <p><a href="story_107.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #106</h3>
-                <p><a href="story106.html" target="_blank">Read Story</a></p>
+                <p><a href="story_106.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #105</h3>
-                <p><a href="story105.html" target="_blank">Read Story</a></p>
+                <p><a href="story_105.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #104</h3>
-                <p><a href="story104.html" target="_blank">Read Story</a></p>
+                <p><a href="story_104.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #103</h3>
-                <p><a href="story103.html" target="_blank">Read Story</a></p>
+                <p><a href="story_103.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #102</h3>
-                <p><a href="story102.html" target="_blank">Read Story</a></p>
+                <p><a href="story_102.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #101</h3>
-                <p><a href="story101.html" target="_blank">Read Story</a></p>
+                <p><a href="story_101.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #100</h3>
-                <p><a href="story100.html" target="_blank">Read Story</a></p>
+                <p><a href="story_100.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #99</h3>
-                <p><a href="story99.html" target="_blank">Read Story</a></p>
+                <p><a href="story_99.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #98</h3>
-                <p><a href="story98.html" target="_blank">Read Story</a></p>
+                <p><a href="story_98.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #97</h3>
-                <p><a href="story97.html" target="_blank">Read Story</a></p>
+                <p><a href="story_97.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #96</h3>
-                <p><a href="story96.html" target="_blank">Read Story</a></p>
+                <p><a href="story_96.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #95</h3>
-                <p><a href="story95.html" target="_blank">Read Story</a></p>
+                <p><a href="story_95.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #94</h3>
-                <p><a href="story94.html" target="_blank">Read Story</a></p>
+                <p><a href="story_94.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #93</h3>
-                <p><a href="story93.html" target="_blank">Read Story</a></p>
+                <p><a href="story_93.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #92</h3>
-                <p><a href="story92.html" target="_blank">Read Story</a></p>
+                <p><a href="story_92.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #91</h3>
-                <p><a href="story91.html" target="_blank">Read Story</a></p>
+                <p><a href="story_91.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #90</h3>
-                <p><a href="story90.html" target="_blank">Read Story</a></p>
+                <p><a href="story_90.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #89</h3>
-                <p><a href="story89.html" target="_blank">Read Story</a></p>
+                <p><a href="story_89.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #88</h3>
-                <p><a href="story88.html" target="_blank">Read Story</a></p>
+                <p><a href="story_88.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #87</h3>
-                <p><a href="story87.html" target="_blank">Read Story</a></p>
+                <p><a href="story_87.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #86</h3>
-                <p><a href="story86.html" target="_blank">Read Story</a></p>
+                <p><a href="story_86.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #85</h3>
-                <p><a href="story85.html" target="_blank">Read Story</a></p>
+                <p><a href="story_85.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #84</h3>
-                <p><a href="story84.html" target="_blank">Read Story</a></p>
+                <p><a href="story_84.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #83</h3>
-                <p><a href="story83.html" target="_blank">Read Story</a></p>
+                <p><a href="story_83.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #82</h3>
-                <p><a href="story82.html" target="_blank">Read Story</a></p>
+                <p><a href="story_82.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #81</h3>
-                <p><a href="story81.html" target="_blank">Read Story</a></p>
+                <p><a href="story_81.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #80</h3>
-                <p><a href="story80.html" target="_blank">Read Story</a></p>
+                <p><a href="story_80.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #79</h3>
-                <p><a href="story79.html" target="_blank">Read Story</a></p>
+                <p><a href="story_79.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #78</h3>
-                <p><a href="story78.html" target="_blank">Read Story</a></p>
+                <p><a href="story_78.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #77</h3>
-                <p><a href="story77.html" target="_blank">Read Story</a></p>
+                <p><a href="story_77.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #76</h3>
-                <p><a href="story76.html" target="_blank">Read Story</a></p>
+                <p><a href="story_76.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #75</h3>
-                <p><a href="story75.html" target="_blank">Read Story</a></p>
+                <p><a href="story_75.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #74</h3>
-                <p><a href="story74.html" target="_blank">Read Story</a></p>
+                <p><a href="story_74.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #73</h3>
-                <p><a href="story73.html" target="_blank">Read Story</a></p>
+                <p><a href="story_73.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #72</h3>
-                <p><a href="story72.html" target="_blank">Read Story</a></p>
+                <p><a href="story_72.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #71</h3>
-                <p><a href="story71.html" target="_blank">Read Story</a></p>
+                <p><a href="story_71.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #70</h3>
-                <p><a href="story70.html" target="_blank">Read Story</a></p>
+                <p><a href="story_70.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #69</h3>
-                <p><a href="story69.html" target="_blank">Read Story</a></p>
+                <p><a href="story_69.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #68</h3>
-                <p><a href="story68.html" target="_blank">Read Story</a></p>
+                <p><a href="story_68.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #67</h3>
-                <p><a href="story67.html" target="_blank">Read Story</a></p>
+                <p><a href="story_67.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #66</h3>
-                <p><a href="story66.html" target="_blank">Read Story</a></p>
+                <p><a href="story_66.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #65</h3>
-                <p><a href="story65.html" target="_blank">Read Story</a></p>
+                <p><a href="story_65.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #64</h3>
-                <p><a href="story64.html" target="_blank">Read Story</a></p>
+                <p><a href="story_64.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #63</h3>
-                <p><a href="story63.html" target="_blank">Read Story</a></p>
+                <p><a href="story_63.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #62</h3>
-                <p><a href="story62.html" target="_blank">Read Story</a></p>
+                <p><a href="story_62.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #61</h3>
-                <p><a href="story61.html" target="_blank">Read Story</a></p>
+                <p><a href="story_61.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #60</h3>
-                <p><a href="story60.html" target="_blank">Read Story</a></p>
+                <p><a href="story_60.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #59</h3>
-                <p><a href="story59.html" target="_blank">Read Story</a></p>
+                <p><a href="story_59.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #58</h3>
-                <p><a href="story58.html" target="_blank">Read Story</a></p>
+                <p><a href="story_58.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #57</h3>
-                <p><a href="story57.html" target="_blank">Read Story</a></p>
+                <p><a href="story_57.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #56</h3>
-                <p><a href="story56.html" target="_blank">Read Story</a></p>
+                <p><a href="story_56.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #55</h3>
-                <p><a href="story55.html" target="_blank">Read Story</a></p>
+                <p><a href="story_55.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #54</h3>
-                <p><a href="story54.html" target="_blank">Read Story</a></p>
+                <p><a href="story_54.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #53</h3>
-                <p><a href="story53.html" target="_blank">Read Story</a></p>
+                <p><a href="story_53.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #52</h3>
-                <p><a href="story52.html" target="_blank">Read Story</a></p>
+                <p><a href="story_52.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #51</h3>
-                <p><a href="story51.html" target="_blank">Read Story</a></p>
+                <p><a href="story_51.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #50</h3>
-                <p><a href="story50.html" target="_blank">Read Story</a></p>
+                <p><a href="story_50.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #49</h3>
-                <p><a href="story49.html" target="_blank">Read Story</a></p>
+                <p><a href="story_49.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #48</h3>
-                <p><a href="story48.html" target="_blank">Read Story</a></p>
+                <p><a href="story_48.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #47</h3>
-                <p><a href="story47.html" target="_blank">Read Story</a></p>
+                <p><a href="story_47.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #46</h3>
-                <p><a href="story46.html" target="_blank">Read Story</a></p>
+                <p><a href="story_46.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #45</h3>
-                <p><a href="story45.html" target="_blank">Read Story</a></p>
+                <p><a href="story_45.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #44</h3>
-                <p><a href="story44.html" target="_blank">Read Story</a></p>
+                <p><a href="story_44.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #43</h3>
-                <p><a href="story43.html" target="_blank">Read Story</a></p>
+                <p><a href="story_43.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #42</h3>
-                <p><a href="story42.html" target="_blank">Read Story</a></p>
+                <p><a href="story_42.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #41</h3>
-                <p><a href="story41.html" target="_blank">Read Story</a></p>
+                <p><a href="story_41.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #40</h3>
-                <p><a href="story40.html" target="_blank">Read Story</a></p>
+                <p><a href="story_40.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #39</h3>
-                <p><a href="story39.html" target="_blank">Read Story</a></p>
+                <p><a href="story_39.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #38</h3>
-                <p><a href="story38.html" target="_blank">Read Story</a></p>
+                <p><a href="story_38.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #37</h3>
-                <p><a href="story37.html" target="_blank">Read Story</a></p>
+                <p><a href="story_37.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #36</h3>
-                <p><a href="story36.html" target="_blank">Read Story</a></p>
+                <p><a href="story_36.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #35</h3>
-                <p><a href="story35.html" target="_blank">Read Story</a></p>
+                <p><a href="story_35.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #34</h3>
-                <p><a href="story34.html" target="_blank">Read Story</a></p>
+                <p><a href="story_34.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #33</h3>
-                <p><a href="story33.html" target="_blank">Read Story</a></p>
+                <p><a href="story_33.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #32</h3>
-                <p><a href="story32.html" target="_blank">Read Story</a></p>
+                <p><a href="story_32.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #31</h3>
-                <p><a href="story31.html" target="_blank">Read Story</a></p>
+                <p><a href="story_31.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #30</h3>
-                <p><a href="story30.html" target="_blank">Read Story</a></p>
+                <p><a href="story_30.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #29</h3>
-                <p><a href="story29.html" target="_blank">Read Story</a></p>
+                <p><a href="story_29.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #28</h3>
-                <p><a href="story28.html" target="_blank">Read Story</a></p>
+                <p><a href="story_28.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #27</h3>
-                <p><a href="story27.html" target="_blank">Read Story</a></p>
+                <p><a href="story_27.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #26</h3>
-                <p><a href="story26.html" target="_blank">Read Story</a></p>
+                <p><a href="story_26.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #25</h3>
-                <p><a href="story25.html" target="_blank">Read Story</a></p>
+                <p><a href="story_25.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #24</h3>
-                <p><a href="story24.html" target="_blank">Read Story</a></p>
+                <p><a href="story_24.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #23</h3>
-                <p><a href="story23.html" target="_blank">Read Story</a></p>
+                <p><a href="story_23.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #22</h3>
-                <p><a href="story22.html" target="_blank">Read Story</a></p>
+                <p><a href="story_22.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #21</h3>
-                <p><a href="story21.html" target="_blank">Read Story</a></p>
+                <p><a href="story_21.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #20</h3>
-                <p><a href="story20.html" target="_blank">Read Story</a></p>
+                <p><a href="story_20.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #19</h3>
-                <p><a href="story19.html" target="_blank">Read Story</a></p>
+                <p><a href="story_19.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #18</h3>
-                <p><a href="story18.html" target="_blank">Read Story</a></p>
+                <p><a href="story_18.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #17</h3>
-                <p><a href="story17.html" target="_blank">Read Story</a></p>
+                <p><a href="story_17.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #16</h3>
-                <p><a href="story16.html" target="_blank">Read Story</a></p>
+                <p><a href="story_16.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #15</h3>
-                <p><a href="story15.html" target="_blank">Read Story</a></p>
+                <p><a href="story_15.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #14</h3>
-                <p><a href="story14.html" target="_blank">Read Story</a></p>
+                <p><a href="story_14.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #13</h3>
-                <p><a href="story13.html" target="_blank">Read Story</a></p>
+                <p><a href="story_13.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #12</h3>
-                <p><a href="story12.html" target="_blank">Read Story</a></p>
+                <p><a href="story_12.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #11</h3>
-                <p><a href="story11.html" target="_blank">Read Story</a></p>
+                <p><a href="story_11.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #10</h3>
-                <p><a href="story10.html" target="_blank">Read Story</a></p>
+                <p><a href="story_10.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #9</h3>
-                <p><a href="story9.html" target="_blank">Read Story</a></p>
+                <p><a href="story_9.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #8</h3>
-                <p><a href="story8.html" target="_blank">Read Story</a></p>
+                <p><a href="story_8.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #7</h3>
-                <p><a href="story7.html" target="_blank">Read Story</a></p>
+                <p><a href="story_7.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #6</h3>
-                <p><a href="story6.html" target="_blank">Read Story</a></p>
+                <p><a href="story_6.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #5</h3>
-                <p><a href="story5.html" target="_blank">Read Story</a></p>
+                <p><a href="story_5.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #4</h3>
-                <p><a href="story4.html" target="_blank">Read Story</a></p>
+                <p><a href="story_4.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #3</h3>
-                <p><a href="story3.html" target="_blank">Read Story</a></p>
+                <p><a href="story_3.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #2</h3>
-                <p><a href="story2.html" target="_blank">Read Story</a></p>
+                <p><a href="story_2.html" target="_blank">Read Story</a></p>
             </div>
             <div class="story-card">
                 <h3>Story #1</h3>
-                <p><a href="story1.html" target="_blank">Read Story</a></p>
+                <p><a href="story_1.html" target="_blank">Read Story</a></p>
             </div>
         </div>
         
